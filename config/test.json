@@ -1,0 +1,24 @@
+{
+  "debug": false,
+  "jwt": {
+    "secret": "<Secret for issuing jwt>"
+  },
+  "hashtag": "#",
+  "cache": {
+    "ttl": 0,
+    "enabled": false
+  },
+  "twitter": {
+    "apiKey": "<twitter api key>",
+    "apiSecret": "<twitter api secret>",
+    "accessToken": "<twitter api access token>",
+    "accessSecret": "<twitter api access secret>"
+  },
+  "discord": {
+    "guildId": "<guild id for use authorization>",
+    "clientId": "<discord api client id>",
+    "clientSecret": "<discord api client secret>",
+    "bot": "<Token associated with bot in guild>",
+    "redirectUrl": "http://localhost:3000/auth/discord/callback"
+  }
+}

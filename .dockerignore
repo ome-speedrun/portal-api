@@ -1,0 +1,21 @@
+# Local packages
+node_modules
+
+# Devs
+.editorconfig
+.env.example
+stubs
+jest.config.js
+nodemon.json
+
+# Docs
+*.md
+
+# Git
+.git
+.gitignore
+
+
+# Docker
+Dockerfile
+docker-compose.*

@@ -1,0 +1,11 @@
+services:
+  web:
+    restart: always
+    ports:
+      - "3000:3000"
+  db:
+    restart: always
+    volumes:
+      - portal-api-db:/var/lib/mysql
+volumes:
+  portal-api-db:

@@ -1,3 +1,14 @@
+# Compiled files
+dist
+
+# Configurations
+config/*
+!config/test.json
+!config/default.json
+
+# docker-compose for development
+docker-compose.override.yml
+
 # Logs
 logs
 *.log

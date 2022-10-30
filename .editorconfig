@@ -1,0 +1,11 @@
+[*.{js,ts}]
+indent_size = 2
+indent_style = space
+
+[*.{json,yml,yaml}]
+indent_size = 2
+indent_style = space
+
+[*.{prisma}]
+indent_size = 2
+indent_style = space
