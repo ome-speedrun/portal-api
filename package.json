@@ -6,7 +6,6 @@
   "scripts": {
     "app:assign-discord-role": "ts-node -r tsconfig-paths/register ./src/scripts/assignRoleToDiscord.ts",
     "build": "tsc -p ./tsconfig.production.json && tsc-alias -p ./tsconfig.production.json",
-    "build:scripts": "tsc -p ./tsconfig.scripts.json",
     "dev": "nodemon",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
