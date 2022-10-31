@@ -4,7 +4,7 @@ import {
 } from '../infrastructure/discord';
 import {
   findOrCreateUserByDiscordId
-} from '../infrastructure/prisma';
+} from '../infrastructure/database';
 import { Result, ok } from 'neverthrow';
 import { AuthenticationJwt, signForUser } from '../models/authenticationJwt';
 import config from '@app/config';

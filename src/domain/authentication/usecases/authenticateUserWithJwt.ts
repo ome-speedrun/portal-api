@@ -1,6 +1,6 @@
 import config from '@app/config';
 import { ok, err, Result } from 'neverthrow';
-import { findUserById } from '../infrastructure/prisma';
+import { findUserById } from '../infrastructure/database';
 import {
   InvalidJwtError,
   JwtExpiredError,

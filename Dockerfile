@@ -6,9 +6,6 @@ COPY ./package*.json /packages
 WORKDIR /packages
 RUN npm install
 
-COPY ./prisma ./prisma
-RUN npx prisma generate
-
 FROM node:14
 
 RUN mkdir /app

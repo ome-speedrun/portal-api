@@ -54,7 +54,6 @@ export const exchangeAuthCode = async (
   redirectUrl: string,
 ): Promise<AccessTokens> => {
 
-  console.log(code);
   const data = {
     client_id: credentials.clientId,
     client_secret: credentials.clientSecret,

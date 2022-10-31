@@ -1,5 +1,4 @@
 import { UserId } from '@domain/types';
-import { PrismaClient } from '@prisma/client';
 import {
   DiscordRole,
   DiscordRoleId,
@@ -7,17 +6,21 @@ import {
 } from '../models/discordRole';
 import { isRoleType } from '../models/roles';
 import { makeUserRole, UserRole } from '../models/userRole';
+import knex from '@libs/knex';
 
-const prisma = new PrismaClient();
+type UserRoleTable = {
+  user_id: string;
+  type: string;
+}
+
+type DiscordRoleTable = {
+  discord_role_id: string;
+  type: string;
+}
 
 export const listUserRolesById = async (id: UserId): Promise<UserRole[]> => {
-  const roles = await prisma.userRole.findMany({
-    select: {
-      type: true,
-      user_id: true,
-    },
-    where: { user_id: id }
-  });
+  const roles = await knex<UserRoleTable>('user_roles')
+    .where({ user_id: id }).select('user_id', 'type');
 
   return roles.map((role) => {
     if (!isRoleType(role.type)) {
@@ -31,17 +34,9 @@ export const listUserRolesById = async (id: UserId): Promise<UserRole[]> => {
 export const listDiscordRolesInId = async (
   ids: DiscordRoleId[]
 ): Promise<DiscordRole[]> => {
-  const roles = await prisma.discordRole.findMany({
-    select: {
-      type: true,
-      discord_role_id: true,
-    },
-    where: {
-      discord_role_id: {
-        in: ids,
-      }
-    }
-  });
+  const roles = await knex<DiscordRoleTable>('discord_roles')
+    .whereIn('discord_role_id', ids)
+    .select('discord_role_id', 'type');
 
   return roles.map((role) => {
     if (!isRoleType(role.type)) {
@@ -55,12 +50,11 @@ export const listDiscordRolesInId = async (
 export const saveDiscordRole = async (
   role: DiscordRole
 ): Promise<DiscordRole> => {
-  const created = await prisma.discordRole.create({
-    data: {
+  const [created,] = await knex<DiscordRoleTable>('discord_roles')
+    .insert({
       discord_role_id: role.discordRoleId,
       type: role.type,
-    }
-  });
+    }).returning(['discord_role_id', 'type']);
 
   if (!isRoleType(created.type)) {
     throw new Error('Unknown role type saved!?');

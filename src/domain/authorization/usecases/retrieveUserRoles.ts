@@ -5,7 +5,7 @@ import { ok, Result } from 'neverthrow';
 import {
   listDiscordRolesInId,
   listUserRolesById
-} from '../infrastructure/prisma';
+} from '../infrastructure/database';
 import { collectRolesForUser, User } from '../models/user';
 
 export const retrieveUserRoles = async (

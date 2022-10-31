@@ -1,4 +1,6 @@
 import configModule from 'config';
+import type { Knex } from 'knex';
+import * as dotenv from 'dotenv';
 
 type JwtConfiguration = {
   secret: string;
@@ -31,7 +33,24 @@ type Configuration = {
   cache: CacheConfiguration;
   twitter: TwitterConfiguration;
   discord: DiscordConfiguration;
+  knex: Knex.Config;
 }
+
+dotenv.config();
+
+export const knexConfig: Knex.Config = {
+  client: 'postgresql',
+  connection: {
+    database: 'portal-api',
+    host: process.env.DATABASE_HOST,
+    port: Number(process.env.DATABASE_PORT),
+    user: process.env.DATABASE_USERNAME,
+    password: process.env.DATABASE_PASSWORD,
+  },
+  migrations: {
+    tableName: 'knex_migrations'
+  }
+};
 
 const config: Configuration = {
   debug: configModule.get('debug'),
@@ -55,7 +74,8 @@ const config: Configuration = {
     redirectUrl: configModule.get('discord.redirectUrl'),
     guildId: configModule.get('discord.guildId'),
     bot: configModule.get('discord.bot'),
-  }
+  },
+  knex: knexConfig,
 };
 
 export default config;

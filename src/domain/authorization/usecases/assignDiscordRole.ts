@@ -1,5 +1,5 @@
 import { ok, Result } from 'neverthrow';
-import { saveDiscordRole } from '../infrastructure/prisma';
+import { saveDiscordRole } from '../infrastructure/database';
 import {
   DiscordRole,
   DiscordRoleId,
