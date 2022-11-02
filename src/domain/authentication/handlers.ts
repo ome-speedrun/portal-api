@@ -1,5 +1,5 @@
 import { AsyncRequestHandler, syncRoute } from '@app/handler';
-import { allowAccessTo } from '@domain/authorization/middlewares';
+import { guard } from '@domain/authorization/middlewares';
 import { CallbackRequest, CallbackResponse } from 'contracts/authentication';
 import { RequestHandler, Router } from 'express';
 import { authenticateWithJwt } from './middlewares';
@@ -45,13 +45,5 @@ const processDiscordCallbackHandler: AsyncRequestHandler<
 };
 
 router.get('/discord/callback', syncRoute(processDiscordCallbackHandler));
-
-router.get('/test',
-  authenticateWithJwt,
-  allowAccessTo('administrator'),
-  (_, res) => {
-    return res.send('OK');
-  }
-);
 
 export default router;

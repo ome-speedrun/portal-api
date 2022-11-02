@@ -1,0 +1,22 @@
+POST http://localhost:3000/events
+Content-Type: application/json
+Authorization: Bearer
+
+{
+    "slug": "ome1h",
+    "name": "1 hour Thon",
+    "periods": [
+        {
+            "from": "2022-10-29T01:00:00.000Z",
+            "to": "2022-10-29T13:00:00.000Z"
+        },
+        {
+            "from": "2022-10-29T00:00:00.000Z",
+            "to": "2022-10-29T21:00:00.000Z"
+        },
+        {
+            "from": "2022-10-28T01:00:00.000Z",
+            "to": "2022-10-28T13:00:00.000Z"
+        }
+    ]
+}

@@ -21,7 +21,15 @@ export type Event = {
   id: EventId;
   meta: EventMeta;
   profile: EventProfile;
+  publishedAt: moment.Moment | null;
 }
+
+export type PublicEvent = Event & { publishedAt: moment.Moment };
+export type PrivateEvent = Event & { publishedAt: null };
+
+export const isPublic = (event: Event): event is PublicEvent => {
+  return !!event.publishedAt;
+};
 
 export const makePhantomEvent = (
   slug: string,
@@ -42,6 +50,7 @@ export const makePhantomEvent = (
   const totalPeriod = makeTotalPeriod(mergedPeriods);
 
   return {
+    id: null,
     meta: {
       slug,
       totalPeriod,
@@ -50,6 +59,63 @@ export const makePhantomEvent = (
     profile: {
       name,
       description: '',
+    },
+    publishedAt: null,
+  };
+};
+
+export const makeEvent = (
+  id: EventId,
+  slug: string,
+  holdingPeriods: HoldingPeriods,
+  profile: EventProfile,
+  publishedAt: moment.Moment | null,
+): Event => {
+  return {
+    id,
+    meta: {
+      slug,
+      holdingPeriods,
+      totalPeriod: makeTotalPeriod(holdingPeriods),
+    },
+    profile,
+    publishedAt,
+  };
+};
+
+export const editProfile = (
+  event: Event,
+  name: string,
+  description: string,
+): Event => {
+
+  if (name.length < 3) {
+    throw new DomainError('Event name must be length equals to 3 or longer.');
+  }
+  
+  return {
+    ... event,
+    profile: {
+      name: name || event.profile.name,
+      description: description || event.profile.description
+    },
+  };
+};
+
+export const editMeta = (
+  event: Event,
+  holdingPeriods: HoldingPeriods,
+): Event => {
+
+  if (holdingPeriods.length === 0) {
+    throw new DomainError('Event must have holding period.');
+  }
+
+  return {
+    ... event,
+    meta: {
+      ... event.meta,
+      holdingPeriods: mergePeriods(holdingPeriods),
     },
   };
 };
@@ -69,7 +135,7 @@ const mergePeriods = (periods: Period[]): Period[] => {
 
     if (period.from.isAfter(tmp.to)) {
       merged.push(tmp);
-      tmp = null;
+      tmp = period;
       return;
     }
 

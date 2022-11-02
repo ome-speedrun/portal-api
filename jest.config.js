@@ -5,5 +5,9 @@ module.exports = {
   moduleDirectories: [
     'node_modules',
     'src',
-  ]
+  ],
+  moduleNameMapper: {
+    '@domain/(.*)$': '<rootDir>/src/domain/$1',
+    '@libs/(.*)$': '<rootDir>/src/libs/$1',
+  }
 };

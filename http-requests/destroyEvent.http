@@ -1,0 +1,3 @@
+DELETE http://localhost:3000/events/ome1h
+Content-Type: application/json
+Authorization: Bearer
